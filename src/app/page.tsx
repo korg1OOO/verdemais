@@ -57,7 +57,7 @@ export default function Home() {
   number: ''
 });
 
-  const pixNumber = "09543603979";
+  const pixNumber = "3903c709-b41b-4f60-9895-d3d8b5b74990";
 
   const products: Product[] = [
     {
@@ -254,7 +254,7 @@ const updateQuantity = (productId: number, change: number) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0 flex items-center">
-              <div className="w-8 h-8 bg-purple-600 rounded mr-2" />
+              <div className="w-8 h-8 bg-green-600 rounded mr-2" />
               <span className="text-xl sm:text-2xl font-bold text-gray-900">Verde Mais</span>
               <span className="text-xs sm:text-sm text-gray-600 ml-1">Floricultura</span>
             </div>
@@ -266,7 +266,7 @@ const updateQuantity = (productId: number, change: number) => {
                 onClick={() => setIsCartOpen(true)}
               >
                 <ShoppingCart size={20} />
-                <Badge className="absolute -top-2 -right-2 bg-purple-600 text-white min-w-[20px] h-5 flex items-center justify-center text-xs">
+                <Badge className="absolute -top-2 -right-2 bg-green-600 text-white min-w-[20px] h-5 flex items-center justify-center text-xs">
                   {cart.reduce((total, item) => total + item.quantity, 0)}
                 </Badge>
               </Button>
@@ -374,7 +374,7 @@ const updateQuantity = (productId: number, change: number) => {
       </div>
     )}
     <Button
-      className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+      className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
       onClick={() => setIsCheckout(true)}
       disabled={cart.length === 0}
     >
@@ -474,7 +474,7 @@ const updateQuantity = (productId: number, change: number) => {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+                  className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
                   disabled={!address.cep || !address.bairro || !address.rua || !address.number}
                 >
                   Confirmar Endereço
@@ -491,33 +491,46 @@ const updateQuantity = (productId: number, change: number) => {
 
             {/* Payment Confirmation with Pix Number */}
             {isCheckout && isPaymentSubmitted && (
-              <div className="space-y-4">
-                <p className="text-gray-600">
-                  Pedido confirmado! Por favor, realize o pagamento usando o seguinte número Pix:
-                </p>
-                <div className="bg-gray-100 p-4 rounded-lg text-center">
-                  <p className="text-lg font-bold">{pixNumber}</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Total a pagar: R${' '}
-                    {cart
-                      .reduce((total, item) => total + item.price * item.quantity, 0)
-                      .toFixed(2)
-                      .replace('.', ',')}
-                  </p>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Após o pagamento, seu pedido será enviado para: <br />
-                  <span className="font-medium">
-                    {address.rua}, {address.number}, {address.bairro}, {address.city} - {address.state}, CEP: {address.cep}
-                  </span>
-                </p>
-                <Button
-                  className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
-                  onClick={handleFinishPurchase}
-                >
-                  Concluir
-                </Button>
-              </div>
+  <div className="space-y-4">
+    <p className="text-gray-600">
+      Pedido confirmado! Por favor, realize o pagamento usando o seguinte número Pix:
+    </p>
+    <div className="bg-gray-100 p-4 rounded-lg text-center">
+      <div className="flex items-center justify-center gap-2">
+        <p className="text-lg font-bold">{pixNumber}</p>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            navigator.clipboard.writeText(pixNumber);
+            alert('Chave Pix copiada para a área de transferência!');
+          }}
+          className="ml-2"
+        >
+          Copiar Chave
+        </Button>
+      </div>
+      <p className="text-sm text-gray-600 mt-1">
+        Total a pagar: R${' '}
+        {cart
+          .reduce((total, item) => total + item.price * item.quantity, 0)
+          .toFixed(2)
+          .replace('.', ',')}
+      </p>
+    </div>
+    <p className="text-sm text-gray-600">
+      Após o pagamento, seu pedido será enviado para: <br />
+      <span className="font-medium">
+        {address.rua}, {address.number}, {address.bairro}, {address.city} - {address.state}, CEP: {address.cep}
+      </span>
+    </p>
+    <Button
+      className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
+      onClick={handleFinishPurchase}
+    >
+      Concluir
+    </Button>
+  </div>
             )}
           </div>
         </div>
@@ -526,7 +539,7 @@ const updateQuantity = (productId: number, change: number) => {
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="text-xs sm:text-sm text-gray-600">
-          <a href="#" className="hover:text-purple-600">Página Inicial</a>
+          <a href="#" className="hover:text-green-600">Página Inicial</a>
           <span className="mx-2">/</span>
           <span>Dia dos Namorados</span>
         </div>
@@ -642,12 +655,12 @@ const updateQuantity = (productId: number, change: number) => {
                     />
                     <div className="absolute top-2 sm:top-4 left-2 sm:left-4 flex flex-col gap-2">
                       {product.hasFreteGratis && (
-                        <Badge className="bg-purple-600 text-white px-2 sm:px-3 py-1 text-xs">
+                        <Badge className="bg-green-600 text-white px-2 sm:px-3 py-1 text-xs">
                           🚚 FRETE GRÁTIS
                         </Badge>
                       )}
                       {product.originalPrice > product.price && (
-                        <Badge className="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-2 sm:px-3 py-1 text-xs">
+                        <Badge className="bg-gradient-to-r from-green-400 to-green-600 text-white px-2 sm:px-3 py-1 text-xs">
                           Aproveite enquanto durar o estoque, 50% off só hoje.
                         </Badge>
                       )}
@@ -671,7 +684,7 @@ const updateQuantity = (productId: number, change: number) => {
                     <p className="text-xs text-gray-600 mb-2 sm:mb-3">{product.installments}</p>
                     
                     <Button
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                      className="w-full bg-green-600 hover:bg-green-700 text-white"
                       onClick={() => addToCart(product)}
                       disabled={!product.inStock}
                     >
