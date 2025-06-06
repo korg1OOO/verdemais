@@ -29,7 +29,7 @@ export default function Home() {
   const [outOfStock, setOutOfStock] = useState(false);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [sortOption, setSortOption] = useState("featured");
+  const [sortOption, setSortOption] = useState<"featured" | "best-selling" | "alphabetical" | "price-low" | "price-high">("featured");
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
@@ -597,18 +597,21 @@ const updateQuantity = (productId, change) => {
               </h1>
               <div className="flex items-center gap-2 sm:gap-4">
                 <span className="text-xs sm:text-sm text-gray-600">{sortedProducts.length} produtos</span>
-                <Select value={sortOption} onValueChange={(value) => setSortOption(value)}>
-                  <SelectTrigger className="w-40 sm:w-48 text-xs sm:text-sm">
-                    <SelectValue placeholder="Ordenar por" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="featured">Em destaque</SelectItem>
-                    <SelectItem value="best-selling">Mais vendidos</SelectItem>
-                    <SelectItem value="alphabetical">Ordem alfabética, A-Z</SelectItem>
-                    <SelectItem value="price-low">Preço, ordem crescente</SelectItem>
-                    <SelectItem value="price-high">Preço, ordem decrescente</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Select
+  value={sortOption}
+  onValueChange={(value: "featured" | "best-selling" | "alphabetical" | "price-low" | "price-high") => setSortOption(value)}
+>
+  <SelectTrigger className="w-40 sm:w-48 text-xs sm:text-sm">
+    <SelectValue placeholder="Ordenar por" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="featured">Em destaque</SelectItem>
+    <SelectItem value="best-selling">Mais vendidos</SelectItem>
+    <SelectItem value="alphabetical">Ordem alfabética, A-Z</SelectItem>
+    <SelectItem value="price-low">Preço, ordem crescente</SelectItem>
+    <SelectItem value="price-high">Preço, ordem decrescente</SelectItem>
+  </SelectContent>
+</Select>
               </div>
             </div>
 
