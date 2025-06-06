@@ -38,14 +38,21 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
-  const [address, setAddress] = useState({
-    cep: '',
-    state: '',
-    city: '',
-    bairro: '',
-    rua: '',
-    number: ''
-  });
+  const [address, setAddress] = useState<{
+  cep: string;
+  state: string;
+  city: string;
+  bairro: string;
+  rua: string;
+  number: string;
+}>({
+  cep: '',
+  state: '',
+  city: '',
+  bairro: '',
+  rua: '',
+  number: ''
+});
 
   const pixNumber = "09543603979";
 
@@ -222,7 +229,7 @@ const updateQuantity = (productId: number, change: number) => {
     setIsCartOpen(false);
   };
 
-  const StarRating = ({ rating, reviews }) => (
+  const StarRating = ({ rating, reviews }: { rating: number; reviews: number }) => (
     <div className="flex items-center gap-1 mb-2">
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
