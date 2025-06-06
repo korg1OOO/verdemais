@@ -10,6 +10,19 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Star, X } from "lucide-react";
 import Image from "next/image";
 
+interface Product {
+  id: number;
+  title: string;
+  image: string;
+  rating: number;
+  reviews: number;
+  price: number;
+  originalPrice: number;
+  installments: string;
+  hasFreteGratis: boolean;
+  inStock: boolean;
+}
+
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [inStock, setInStock] = useState(true);
@@ -32,7 +45,7 @@ export default function Home() {
 
   const pixNumber = "09543603979";
 
-  const products = [
+  const products: Product[] = [
     {
       id: 1,
       title: "Buquê de 6 Rosas Persyas",
@@ -104,7 +117,10 @@ export default function Home() {
     return matchesAvailability && matchesPrice;
   });
 
-  const sortProducts = (products, sortOption) => {
+  const sortProducts = (
+    products: Product[],
+    sortOption: "featured" | "best-selling" | "alphabetical" | "price-low" | "price-high"
+  ) => {
     const sortedProducts = [...products];
     switch (sortOption) {
       case "featured":
