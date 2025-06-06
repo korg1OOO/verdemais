@@ -23,6 +23,10 @@ interface Product {
   inStock: boolean;
 }
 
+interface CartItem extends Product {
+  quantity: number;
+}
+
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [inStock, setInStock] = useState(true);
@@ -30,7 +34,7 @@ export default function Home() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortOption, setSortOption] = useState<"featured" | "best-selling" | "alphabetical" | "price-low" | "price-high">("featured");
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
@@ -140,30 +144,30 @@ export default function Home() {
 
   const sortedProducts = sortProducts(filteredProducts, sortOption);
 
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
-  };
-
-  const removeFromCart = (productId) => {
-  setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  const addToCart = (product: Product) => {
+  setCart((prevCart: CartItem[]) => {
+    const existingItem = prevCart.find((item: CartItem) => item.id === product.id);
+    if (existingItem) {
+      return prevCart.map((item: CartItem) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    }
+    return [...prevCart, { ...product, quantity: 1 } as CartItem];
+  });
 };
 
-const updateQuantity = (productId, change) => {
-  setCart((prevCart) => {
-    const updatedCart = prevCart.map((item) =>
+  const removeFromCart = (productId: number) => {
+  setCart((prevCart: CartItem[]) => prevCart.filter((item: CartItem) => item.id !== productId));
+};
+
+const updateQuantity = (productId: number, change: number) => {
+  setCart((prevCart: CartItem[]) => {
+    const updatedCart = prevCart.map((item: CartItem) =>
       item.id === productId
         ? { ...item, quantity: Math.max(1, item.quantity + change) }
         : item
     );
-    return updatedCart.filter((item) => item.quantity > 0);
+    return updatedCart.filter((item: CartItem) => item.quantity > 0);
   });
 };
 
