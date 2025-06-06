@@ -27,6 +27,16 @@ interface CartItem extends Product {
   quantity: number;
 }
 
+interface Address {
+  cep: string;
+  state: string;
+  city: string;
+  bairro: string;
+  rua: string;
+  number: string;
+}
+
+
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [inStock, setInStock] = useState(true);
@@ -38,14 +48,7 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
-  const [address, setAddress] = useState<{
-  cep: string;
-  state: string;
-  city: string;
-  bairro: string;
-  rua: string;
-  number: string;
-}>({
+  const [address, setAddress] = useState<Address>({
   cep: '',
   state: '',
   city: '',
@@ -178,41 +181,41 @@ const updateQuantity = (productId: number, change: number) => {
   });
 };
 
-  const handleCepChange = async (cep) => {
-    const cleanedCep = cep.replace(/\D/g, '');
-    const formattedCep = cleanedCep.replace(/(\d{5})(\d{3})/, '$1-$2');
-    setAddress({ ...address, cep: formattedCep });
+  const handleCepChange = async (cep: string) => {
+  const cleanedCep = cep.replace(/\D/g, '');
+  const formattedCep = cleanedCep.replace(/(\d{5})(\d{3})/, '$1-$2');
+  setAddress({ ...address, cep: formattedCep });
 
-    if (cleanedCep.length === 8) {
-      try {
-        const response = await fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`);
-        const data = await response.json();
-        if (!data.erro) {
-          setAddress((prev) => ({
-            ...prev,
-            state: data.uf,
-            city: data.localidade,
-            bairro: data.bairro || '',
-            rua: data.logradouro || ''
-          }));
-        } else {
-          alert('CEP não encontrado. Por favor, verifique o CEP digitado.');
-        }
-      } catch (error) {
-        console.error('Erro ao buscar CEP:', error);
-        alert('Erro ao consultar o CEP. Tente novamente.');
+  if (cleanedCep.length === 8) {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`);
+      const data = await response.json();
+      if (!data.erro) {
+        setAddress((prev) => ({
+          ...prev,
+          state: data.uf,
+          city: data.localidade,
+          bairro: data.bairro || '',
+          rua: data.logradouro || ''
+        }));
+      } else {
+        alert('CEP não encontrado. Por favor, verifique o CEP digitado.');
       }
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+      alert('Erro ao consultar o CEP. Tente novamente.');
     }
-  };
+  }
+};
 
-  const handleCheckoutSubmit = (e) => {
-    e.preventDefault();
-    if (address.cep && address.bairro && address.rua && address.number) {
-      setIsPaymentSubmitted(true);
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
-  };
+  const handleCheckoutSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (address.cep && address.bairro && address.rua && address.number) {
+    setIsPaymentSubmitted(true);
+  } else {
+    alert('Por favor, preencha todos os campos obrigatórios.');
+  }
+};
 
   const handleFinishPurchase = () => {
     setCart([]);
@@ -666,20 +669,7 @@ const updateQuantity = (productId: number, change: number) => {
                       )}
                     </div>
                     <p className="text-xs text-gray-600 mb-2 sm:mb-3">{product.installments}</p>
-                    {product.variants && (
-                      <div className="flex gap-2 mb-2 sm:mb-3">
-                        {product.variants.map((variant) => (
-                          <div
-                            key={variant}
-                            className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 ${
-                              variant === "Dourado"
-                                ? "bg-yellow-400 border-yellow-500"
-                                : "bg-gray-300 border-gray-400"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    )}
+                    
                     <Button
                       className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                       onClick={() => addToCart(product)}
