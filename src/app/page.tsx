@@ -255,7 +255,7 @@ const updateQuantity = (productId: number, change: number) => {
     <div className="flex items-center justify-between h-16">
       <div className="flex-shrink-0 flex items-center">
         <img
-          src="blob:https://web.whatsapp.com/95f8b03c-da00-4df8-a7e5-6683e97d2058" // Replace with the path to your image
+          src="https://res.cloudinary.com/dfawdodax/image/upload/v1749522591/WhatsApp_Image_2025-06-09_at_23.19.06_wyatrp.jpg" // Replace with the path to your image
           alt="Verde Mais Logo"
           className="w-8 h-8 rounded mr-2"
         />
