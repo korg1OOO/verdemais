@@ -251,29 +251,33 @@ const updateQuantity = (productId: number, change: number) => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <div className="w-8 h-8 bg-green-600 rounded mr-2" />
-              <span className="text-xl sm:text-2xl font-bold text-gray-900">Verde Mais</span>
-              <span className="text-xs sm:text-sm text-gray-600 ml-1">Floricultura</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative"
-                onClick={() => setIsCartOpen(true)}
-              >
-                <ShoppingCart size={20} />
-                <Badge className="absolute -top-2 -right-2 bg-green-600 text-white min-w-[20px] h-5 flex items-center justify-center text-xs">
-                  {cart.reduce((total, item) => total + item.quantity, 0)}
-                </Badge>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-between h-16">
+      <div className="flex-shrink-0 flex items-center">
+        <img
+          src="blob:https://web.whatsapp.com/95f8b03c-da00-4df8-a7e5-6683e97d2058" // Replace with the path to your image
+          alt="Verde Mais Logo"
+          className="w-8 h-8 rounded mr-2"
+        />
+        <span className="text-xl sm:text-2xl font-bold text-gray-900">Verde Mais</span>
+        <span className="text-xs sm:text-sm text-gray-600 ml-1">Floricultura</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="relative"
+          onClick={() => setIsCartOpen(true)}
+        >
+          <ShoppingCart size={20} />
+          <Badge className="absolute -top-2 -right-2 bg-green-600 text-white min-w-[20px] h-5 flex items-center justify-center text-xs">
+            {cart.reduce((total, item) => total + item.quantity, 0)}
+          </Badge>
+        </Button>
+      </div>
+    </div>
+  </div>
+</header>
 
       {/* Cart Modal */}
       {isCartOpen && (
